@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Prices</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 10px 0;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    span {
+      font-weight: bold;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Crypto Prices in Real-time</h1>
+  <ul id="prices-list">
+    <li>Bitcoin : LKR  <span id="bitcoin" ></span></li>
+    <li>Ethereum : LKR  <span id="ethereum" ></span></li>
+    <li>Ripple: LKR  <span id="ripple" ></span></li>
+    <li>Tether : LKR  <span id="tether" ></span></li>
+  </ul>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+    const bitcoin = document.getElementById('bitcoin')
+    const ethereum = document.getElementById('ethereum')
+    const ripple = document.getElementById('ripple')
+    const tether = document.getElementById('tether')
+
+    // Connect to the Socket.IO server
+    const socket = io('http://localhost:3000/')
+
+    socket.on('connect', () => {});
+
+    // Listen for event from the server
+    socket.on('price_update', (data) => {
+
+      bitcoin.textContent = data.bitcoin.lkr;
+      ethereum.textContent = data.ethereum.lkr;
+      ripple.textContent = data.ripple.lkr;
+      tether.textContent = data.tether.lkr;
+
+    });
+  </script>
+</body>
+
+</html>
